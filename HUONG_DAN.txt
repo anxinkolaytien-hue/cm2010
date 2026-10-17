@@ -1,0 +1,17 @@
+HUONG DAN - WEBSITE PHUONG ANH 20/10 (BAN KHONG CO THU MUC)
+
+Tat ca tep website nam cung mot cap: index.html, style.css, main.js, music.mp3, 01.jpg den 06.jpg.
+Mo index.html de xem website. Khi dang website, tai len tat ca cac tep nay vao cung thu muc goc.
+
+NHAC: giu nguyen music.mp3 la bai nhac cu. Them 8 bai moi cung thu muc voi index.html:
+- song2.mp3 - Nguoi dau tien
+- song3.mp3 - Duong toi cho em ve
+- song4.mp3 - Tim em
+- song5.mp3 - Mat ket noi
+- song6.mp3 - Vet thuong
+- song7.mp3 - Vo tinh
+- song8.mp3 - Bong hoa dep nhat
+- song9.mp3 - Khong buong
+
+Chi cac tep da co san moi duoc dong goi. Ban can tu chep 8 file MP3 cua minh vao day, dung ten nhu tren.
+Khong doi ten music.mp3 hoac cac tep anh neu khong sua lai duong dan trong code.

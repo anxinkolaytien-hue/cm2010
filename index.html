@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Một món quà nhỏ dễ thương dành tặng em vào ngày Phụ nữ Việt Nam 20/10 💗">
+<meta name="theme-color" content="#ffd9e8">
+<title>Một món quà nhỏ dành cho Phương Anh 💗</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💖%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Be+Vietnam+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="sky"></canvas>
+<canvas id="fx"></canvas>
+<div id="flash"></div>
+<div id="paper"></div>
+<div id="floatL"></div>
+
+<div id="lock" aria-label="Màn hình mở quà">
+  <div class="intro-sparkle" aria-hidden="true">✦　♡　✧　♡　✦</div>
+  <div class="lockcard">
+    <img id="lockPhoto" alt="">
+    <div class="pane">
+      <div class="padlock" id="padlock">
+        <svg viewBox="0 0 120 150" aria-hidden="true">
+          <path class="shackle" d="M34 70 V48 a26 26 0 0 1 52 0 V70" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+          <path class="lbody" d="M60 140 C10 104 12 66 36 66 C48 66 56 72 60 80 C64 72 72 66 84 66 C108 66 110 104 60 140Z" fill="#fff" fill-opacity=".92"/>
+          <circle cx="60" cy="97" r="7" fill="#e94f90"/><rect x="57" y="99" width="6" height="16" rx="3" fill="#e94f90"/>
+        </svg>
+      </div>
+      <div id="relationship">
+        <h1>Mối quan hệ của chúng ta là gì? 💗</h1>
+        <p class="who">Chọn một đáp án nhé 🌷</p>
+        <div id="relationshipChoices">
+          <button type="button" data-relation="love">1. Người yêu 💞</button>
+          <button type="button" data-relation="friend">2. Bạn 🌸</button>
+          <button type="button" data-relation="friend">3. Bạn 🌷</button>
+          <button type="button" data-relation="friend">4. Bạn 💐</button>
+        </div>
+      </div>
+      <div id="friendResult" hidden>
+        <div class="broken-heart" aria-hidden="true">💔</div>
+        <h1>Trái tim tan vỡ...</h1>
+        <p class="who">Tim Tim buồn mất rồi 🥺<br>Cậu chọn “bạn” rồi...</p>
+        <button type="button" id="tryLove">Thử chọn lại nhé 💗</button>
+      </div>
+      <div id="passwordPanel" hidden>
+        <h1>Nhập mật khẩu 💕</h1>
+        <p class="who">Một món quà nhỏ từ <span class="from"></span><br>gửi đến <span class="to"></span> 🌷</p>
+        <div id="pdots"></div>
+        <div id="keys">
+          <button type="button" data-k="1">1</button><button type="button" data-k="2">2</button><button type="button" data-k="3">3</button>
+          <button type="button" data-k="4">4</button><button type="button" data-k="5">5</button><button type="button" data-k="6">6</button>
+          <button type="button" data-k="7">7</button><button type="button" data-k="8">8</button><button type="button" data-k="9">9</button>
+          <span></span><button type="button" data-k="0">0</button><button type="button" data-k="del" aria-label="Xóa">⌫</button>
+        </div>
+        <p class="hint" id="hint"></p>
+        <p class="intro-note">Có vài kỷ niệm xinh xắn đang chờ cậu mở ra ✨</p>
+        <p id="err" role="alert"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p id="msg" aria-live="polite"></p>
+
+<!-- Robot trái tim Tim Tim (nhân vật chính, tự vẽ bằng SVG) -->
+<div id="bot" role="img" aria-label="Robot trái tim Tim Tim" title="Chạm vào Tim Tim nè">
+  <div class="bubble" id="bubble"></div>
+  <svg viewBox="0 0 200 230" aria-hidden="true">
+    <defs>
+      <radialGradient id="hb" cx="35%" cy="28%" r="85%"><stop offset="0" stop-color="#ffb8d4"/><stop offset=".55" stop-color="#ff5fa2"/><stop offset="1" stop-color="#c9247a"/></radialGradient>
+      <filter id="eg" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    </defs>
+    <g class="bodyg">
+      <g class="antenna"><line x1="100" y1="56" x2="100" y2="24" stroke="#ffd6e7" stroke-width="4" stroke-linecap="round"/><circle class="bulb" cx="100" cy="17" r="8" fill="#fff" filter="url(#eg)"/></g>
+      <g class="armL"><path d="M22 100 Q-2 104 4 128" fill="none" stroke="#ff8fbd" stroke-width="10" stroke-linecap="round"/><circle cx="4" cy="132" r="9" fill="#ffd6e7"/></g>
+      <g class="armR"><path d="M178 100 Q202 104 196 128" fill="none" stroke="#ff8fbd" stroke-width="10" stroke-linecap="round"/><circle cx="196" cy="132" r="9" fill="#ffd6e7"/></g>
+      <path class="flame" d="M91 190 Q100 228 109 190Z" fill="#ffc46b" opacity=".9"/>
+      <path d="M100 188 C40 150 14 112 14 76 C14 46 36 28 62 28 C80 28 94 38 100 52 C106 38 120 28 138 28 C164 28 186 46 186 76 C186 112 160 150 100 188Z" fill="url(#hb)" stroke="#ffd6e7" stroke-width="3"/>
+      <path d="M32 60 Q46 38 72 38" stroke="#fff" stroke-opacity=".6" stroke-width="7" fill="none" stroke-linecap="round"/>
+      <rect x="42" y="64" width="116" height="62" rx="30" fill="#2a0f3d" stroke="#ffc2dc" stroke-width="3"/>
+      <ellipse cx="56" cy="108" rx="9" ry="5" fill="#ff7aa8" opacity=".8"/><ellipse cx="144" cy="108" rx="9" ry="5" fill="#ff7aa8" opacity=".8"/>
+      <g class="eyes"><g class="blinkg">
+        <ellipse class="eyeset eL" cx="76" cy="92" rx="10" ry="13" fill="#a8f5ff" filter="url(#eg)"/><circle class="eyeset eL" cx="73" cy="87" r="3.4" fill="#fff"/>
+        <ellipse class="eyeset eR" cx="124" cy="92" rx="10" ry="13" fill="#a8f5ff" filter="url(#eg)"/><circle class="eyeset eR" cx="121" cy="87" r="3.4" fill="#fff"/>
+      </g></g>
+      <path class="arc arcL" d="M66 97 Q76 83 86 97" stroke="#a8f5ff" stroke-width="5" fill="none" stroke-linecap="round" filter="url(#eg)"/>
+      <path class="arc arcR" d="M114 97 Q124 83 134 97" stroke="#a8f5ff" stroke-width="5" fill="none" stroke-linecap="round" filter="url(#eg)"/>
+      <path class="heye" d="M76 103 C63 94 63 84 70 82 C73 81 75 83 76 85 C77 83 79 81 82 82 C89 84 89 94 76 103Z" fill="#ff7aa8" filter="url(#eg)"/>
+      <path class="heye" d="M124 103 C111 94 111 84 118 82 C121 81 123 83 124 85 C125 83 127 81 130 82 C137 84 137 94 124 103Z" fill="#ff7aa8" filter="url(#eg)"/>
+      <path class="mouthS" d="M90 109 Q100 118 110 109" stroke="#a8f5ff" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <path class="mouthO" d="M87 106 Q100 128 113 106Z" fill="#ff7aa8"/>
+      <path class="chest" d="M100 162 C87 153 85 142 91 140 C95 139 99 141 100 145 C101 141 105 139 109 140 C115 142 113 153 100 162Z" fill="#fff" fill-opacity=".92"/>
+    </g>
+  </svg>
+  <div class="shadow"></div>
+</div>
+
+<!-- Trò ghép hình -->
+<section id="puz">
+  <p class="ptitle">Ghép các mảnh lại để mở bất ngờ nhé 🧩</p>
+  <div id="board"></div>
+  <button id="skip" type="button">Bỏ qua</button>
+</section>
+
+<!-- Phong bì -->
+<section id="env">
+  <div class="envelope" id="envelope">
+    <div class="inner"></div><div class="front"></div><div class="flap"></div><span class="seal">♥</span>
+  </div>
+  <p class="envhint">Chạm để mở ♥</p>
+</section>
+
+<!-- Thư nhiều trang -->
+<section id="ltr">
+  <div class="stack"><i class="back b1"></i><i class="back b2"></i><div id="pages"></div></div>
+  <p id="lcap"></p>
+</section>
+
+<!-- Album ảnh -->
+<section id="alb">
+  <p class="ptitle">Những khoảnh khắc đáng nhớ 💗</p>
+  <div id="polas"></div>
+  <button id="next" type="button">Tiếp ▸</button>
+</section>
+
+<!-- Thẻ thư cuối -->
+<section id="card">
+  <figure><img src="02.jpg" alt="Kỷ niệm của Phương Anh"><figcaption class="to"></figcaption></figure>
+  <div class="txt">
+    <h2>Gửi <span class="to"></span></h2>
+    <ul>
+      <li>Luôn xinh đẹp và rạng rỡ như hôm nay</li>
+      <li>Thật nhiều sức khỏe và bình an</li>
+      <li>Mọi điều ước đều thành hiện thực</li>
+      <li>Nụ cười luôn nở trên môi</li>
+    </ul>
+    <p class="sig">Chúc mừng 20/10 💗<br>— <span class="from"></span> —</p>
+  </div>
+</section>
+
+<div id="musicPanel" aria-label="Điều khiển và chọn nhạc">
+  <button id="playPause" type="button" aria-label="Phát nhạc" title="Phát hoặc tạm dừng nhạc">▶</button>
+  <button id="mute" type="button" aria-pressed="false" aria-label="Tắt tiếng">♫</button>
+  <div class="music-meta">
+    <div class="music-title" id="musicTitle">Một chút dịu dàng ♡</div>
+    <input id="musicProgress" type="range" min="0" max="1000" value="0" step="1" aria-label="Vị trí phát nhạc">
+    <div class="music-times"><span id="musicCurrent">0:00</span><span id="musicDuration">0:00</span></div>
+  </div>
+  <label class="volume-wrap" title="Âm lượng">♪ <input id="musicVolume" type="range" min="0" max="1" step="0.05" value="0.65" aria-label="Âm lượng"></label>
+  <div class="playlist-row" aria-label="Danh sách 9 bài hát">
+    <button id="prevSong" type="button" aria-label="Bài trước" title="Bài trước">⏮</button>
+    <select id="songSelect" aria-label="Chọn bài hát">
+      <option value="music.mp3">1. Bài nhạc cũ</option>
+      <option value="song2.mp3">2. Người đầu tiên</option>
+      <option value="song3.mp3">3. Đường tôi chở em về</option>
+      <option value="song4.mp3">4. Tìm em</option>
+      <option value="song5.mp3">5. Mất kết nối</option>
+      <option value="song6.mp3">6. Vết thương</option>
+      <option value="song7.mp3">7. Vô tình</option>
+      <option value="song8.mp3">8. Bông hoa đẹp nhất</option>
+      <option value="song9.mp3">9. Không buông</option>
+    </select>
+    <button id="nextSong" type="button" aria-label="Bài tiếp theo" title="Bài tiếp theo">⏭</button>
+  </div>
+</div>
+<button id="again" type="button">↻ Xem lại</button>
+<audio id="au" src="music.mp3" preload="metadata"></audio>
+<script src="main.js"></script>
+</body>
+</html>
